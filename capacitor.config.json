@@ -1,0 +1,9 @@
+{
+  "appId": "com.yourname.tournamentmaker",
+  "appName": "Tournament Maker",
+  "webDir": "dist",
+  "backgroundColor": "#0A160F",
+  "android": {
+    "backgroundColor": "#0A160F"
+  }
+}
