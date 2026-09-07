@@ -3,7 +3,6 @@ name: Build Android APK
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: {}
 
 jobs:
   build:
@@ -30,7 +29,7 @@ jobs:
           java-version: 17
 
       - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses > /dev/null || true
+        run: yes | sdkmanager --licenses >/dev/null || true
 
       - name: Add Android platform (first run only)
         run: |
@@ -43,10 +42,12 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
-      - name: Build debug APK
-        run: cd android && ./gradlew assembleDebug --no-daemon
+      - name: Build Release AAB
+        run: cd android && ./gradlew bundleRelease --no-daemon
 
-      - name: Upload APK
-      with:    
-    name: app-release-aab
-    path: android/app/build/outputs/bundle/release/app-release.aab
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
+          
